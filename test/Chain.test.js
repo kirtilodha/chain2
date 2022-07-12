@@ -43,14 +43,14 @@ describe('Chains',()=>{
         const isBuyer = await chain.methods.buyers(accounts[1]).call();
         assert(isBuyer);
     })
-    it('requires price',async()=>{
-        try{
-            await chain.methods.buy().send({
-                value:'5', from: accounts[1]
-            })
-            assert(false);
-        }catch(err){
-            assert(err);
-        }
-    });
+    // it('requires price',async()=>{
+    //     try{
+    //         await chain.methods.buy().send({
+    //             value:'5', from: accounts[1]
+    //         })
+    //         assert(false);
+    //     }catch(err){
+    //         assert(err);
+    //     }
+    // });
 });
