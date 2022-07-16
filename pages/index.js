@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import main from '../ethereum/main';
 import { Card, Button } from 'semantic-ui-react';
 import Layout from '../components/Layout.js'
-// import { Link } from '../routes';
+import { Link } from '../routes';
 
 class ChainIndex extends Component{
     static async getInitialProps(){
@@ -13,11 +13,11 @@ class ChainIndex extends Component{
         const items = this.props.chains.map(address => {
             return{
                 header: address,
-                description:<a> View Product</a>, 
-                // (
-                // <Link route={`/campaigns/${address}`}>
-                // <a> View Campaign</a>
-                // </Link>),
+                description:
+                (
+                <Link route={`/products/${address}`}>
+                <a> View Product</a>
+                </Link>),
                 fluid: true //css to stretch
             };
         });
@@ -29,11 +29,16 @@ class ChainIndex extends Component{
             <Layout>
         <div>
             <h3>All Products</h3>
-         
+
+         <Link route="/products/new">
+            <a>
         <Button floated="right"
             content="Add Product"
             icon="add circle"
             primary={ true }/>
+            </a>
+            </Link>
+
             </div>
 
             <div>{this.renderChains()}</div>
