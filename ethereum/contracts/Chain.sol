@@ -13,6 +13,7 @@ contract Chain{
     address public manager;
     uint public costOfProduct;
     mapping(address=>bool) public buyers;
+    uint public buyerCount;
 
     modifier restricted(){
         require(msg.sender==manager);
@@ -25,5 +26,14 @@ contract Chain{
     function buy() public payable {
         require(msg.value >= costOfProduct);
         buyers[msg.sender]=true;
+        buyerCount++;
     }
+    function getSummary() public view returns(uint, uint, address) {
+        return (
+            costOfProduct,
+            buyerCount,
+            manager
+        );
+    }
+    
 }

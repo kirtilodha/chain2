@@ -2,10 +2,10 @@ const routes = require('next-routes')();
 
 //for vairable routing
 routes
-.add('/campaigns/new', '/campaigns/new') //what url, which page
-.add('/campaigns/:address', '/campaigns/show')
-.add('/campaigns/:address/requests', '/campaigns/requests/index') //when variable is present in url
-.add('/campaigns/:address/requests/new', '/campaigns/requests/new');
+.add('/products/new', '/products/new') //what url, which page
+.add('/products/:address', '/products/show')
+.add('/products/:address/requests', '/products/requests/index') //when variable is present in url
+.add('/products/:address/requests/new', '/products/requests/new');
 
 
 
