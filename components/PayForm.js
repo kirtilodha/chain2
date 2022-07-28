@@ -8,15 +8,14 @@ class PayForm extends Component{
     state = {
         value: '',
         loading:false,
-        errorMessage:"",
-        status:""
+        errorMessage:""
     };
     onSubmit = async(event) =>{
         event.preventDefault();
 
         const chain = Chain(this.props.address);
 
-        this.setState({loading:true,errorMessage:"",status:""});
+        this.setState({loading:true,errorMessage:""});
         try{
             const accounts= await web3.eth.getAccounts();
             await chain.methods.buy().send({
@@ -24,7 +23,6 @@ class PayForm extends Component{
                 value: web3.utils.toWei(this.state.value,'ether')
             });
             Router.replaceRoute(`/products/${this.props.address}`)
-            this.setState({status:"Paid successfully!"})
         } catch(err){
             this.setState({errorMessage:err.message});
         }
