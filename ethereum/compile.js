@@ -10,7 +10,8 @@ fs.removeSync(buildPath)
 const campaignPath = path.resolve(__dirname, 'contracts', 'Chain.sol')
 const source = fs.readFileSync(campaignPath, 'utf8')
 // output contains all the compiled contract code
-const output = solc.compile(source, 1).contracts
+const output = solc.compile(source, 1).contracts;
+console.log(output);
 
 // creates a new directory at buildPath
 fs.ensureDirSync(buildPath)

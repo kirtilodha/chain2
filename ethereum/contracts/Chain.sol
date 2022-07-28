@@ -1,39 +1,90 @@
 pragma solidity ^0.4.17;
-contract MainChain{
+
+contract MainChain {
+    uint256 public userId = 0;
+    struct UserAuth {
+        address publicAddress;
+        string role;
+    }
+    mapping(uint256 => UserAuth) public Users;
+
+    // event userCreated(UserAuth user);
+    function isRegistered(address _publicAddress)
+        public
+        view
+        returns (uint256[2] memory)
+    {
+        uint256[2] memory result = [uint256(0), uint256(0)];
+        for (uint256 i = 0; i < userId; i++) {
+            if (_publicAddress == Users[i].publicAddress) {
+                result[0] = 1;
+                result[1] = i;
+                return result;
+            }
+        }
+        return result;
+    }
+
+    function checkUser(address _publicAddress) public view returns (string) {
+        require((isRegistered(_publicAddress))[0] == 1, "User not registered!");
+        for (uint256 i = 0; i < userId; i++) {
+            if (_publicAddress == Users[i].publicAddress) {
+                return Users[i].role;
+            }
+        }
+    }
+
+    function createUser(string memory role) public {
+        require((isRegistered(msg.sender))[0] == 0, "User already registered!");
+        // User user = new User(userId, name, msg.sender);
+        Users[userId] = UserAuth(msg.sender, role);
+        // emit userCreated(Users[userId]);
+        userId++;
+    }
+
     address[] public deployedChain;
-    function createChain(uint price) public{
-        address newChain = address(new Chain(price,msg.sender));
+
+    function createChain(uint256 price) public {
+        address newChain = address(new Chain(price, msg.sender));
         deployedChain.push(newChain);
     }
-    function getDeployedChains() public view returns(address[] memory) {
+
+    function getDeployedChains() public view returns (address[] memory) {
         return deployedChain;
     }
 }
-contract Chain{
-    address public manager;
-    uint public costOfProduct;
-    mapping(address=>bool) public buyers;
-    uint public buyerCount;
 
-    modifier restricted(){
-        require(msg.sender==manager);
+contract Chain {
+    address public manager;
+    uint256 public costOfProduct;
+    mapping(address => bool) public buyers;
+    uint256 public buyerCount;
+
+    modifier restricted() {
+        require(msg.sender == manager);
         _;
     }
-    constructor(uint price,address creator) public{
-        manager=creator;
+
+    constructor(uint256 price, address creator) public {
+        manager = creator;
         costOfProduct = price;
     }
+
     function buy() public payable {
         require(msg.value >= costOfProduct);
-        buyers[msg.sender]=true;
+        buyers[msg.sender] = true;
         buyerCount++;
     }
-    function getSummary() public view returns(uint, uint, address) {
-        return (
-            costOfProduct,
-            buyerCount,
-            manager
-        );
+
+    function getSummary()
+        public
+        view
+        returns (
+            uint256,
+            uint256,
+            address
+        )
+    {
+        return (costOfProduct, buyerCount, manager);
     }
-    
 }
