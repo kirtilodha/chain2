@@ -7,6 +7,7 @@ contract MainChain {
         string role;
     }
     mapping(uint256 => UserAuth) public Users;
+    mapping(address => address[]) public individualChains;
 
     // event userCreated(UserAuth user);
     function isRegistered(address _publicAddress)
@@ -47,10 +48,14 @@ contract MainChain {
     function createChain(uint256 price) public {
         address newChain = address(new Chain(price, msg.sender));
         deployedChain.push(newChain);
+        individualChains[msg.sender].push(newChain);
     }
 
     function getDeployedChains() public view returns (address[] memory) {
         return deployedChain;
+    }
+    function getOwnChains(address _publicAddress) public view returns (address[] memory) {
+        return individualChains[_publicAddress];
     }
 }
 
