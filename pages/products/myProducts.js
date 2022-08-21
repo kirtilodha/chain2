@@ -35,7 +35,7 @@ function MyProducts() {
   return (
     <Layout>
       <div>
-        <h3>All Products</h3>
+        <h3>My Products</h3>
         <br />
 
           {render()}

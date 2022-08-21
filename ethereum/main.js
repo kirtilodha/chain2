@@ -3,6 +3,6 @@ import MainChain from './build/MainChain.json';
 
 const instance = new web3.eth.Contract(
     JSON.parse(MainChain.interface),
-    '0xE5ad4722e7E4F0DC3b1F6A7f66674C5aBF4063E4'
+    '0x663178e6F46f8a7467C607E08e51AC697A4424e3'
 );
 export default instance;

@@ -64,6 +64,7 @@ contract Chain {
     uint256 public costOfProduct;
     mapping(address => bool) public buyers;
     uint256 public buyerCount;
+    uint256 public valueOfQuality;
 
     modifier restricted() {
         require(msg.sender == manager);
@@ -75,8 +76,11 @@ contract Chain {
         costOfProduct = price;
     }
 
-    function buy() public payable {
-        require(msg.value >= costOfProduct);
+    function buy(string memory quality) public payable {
+        if(keccak256(abi.encodePacked((quality))) == keccak256(abi.encodePacked(("high")))) valueOfQuality=costOfProduct;
+        else if(keccak256(abi.encodePacked((quality))) == keccak256(abi.encodePacked(("medium")))) valueOfQuality= costOfProduct* 75/100;
+        else valueOfQuality = costOfProduct * 50/100;
+        require(msg.value >= valueOfQuality);
         buyers[msg.sender] = true;
         buyerCount++;
     }
