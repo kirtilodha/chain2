@@ -1,5 +1,7 @@
 pragma solidity ^0.4.17;
 
+import './Product.sol';
+
 contract MainChain {
     uint256 public userId = 0;
     struct UserAuth {
@@ -59,41 +61,3 @@ contract MainChain {
     }
 }
 
-contract Chain {
-    address public manager;
-    uint256 public costOfProduct;
-    mapping(address => bool) public buyers;
-    uint256 public buyerCount;
-    uint256 public valueOfQuality;
-
-    modifier restricted() {
-        require(msg.sender == manager);
-        _;
-    }
-
-    constructor(uint256 price, address creator) public {
-        manager = creator;
-        costOfProduct = price;
-    }
-
-    function buy(string memory quality) public payable {
-        if(keccak256(abi.encodePacked((quality))) == keccak256(abi.encodePacked(("high")))) valueOfQuality=costOfProduct;
-        else if(keccak256(abi.encodePacked((quality))) == keccak256(abi.encodePacked(("medium")))) valueOfQuality= costOfProduct* 75/100;
-        else valueOfQuality = costOfProduct * 50/100;
-        require(msg.value >= valueOfQuality);
-        buyers[msg.sender] = true;
-        buyerCount++;
-    }
-
-    function getSummary()
-        public
-        view
-        returns (
-            uint256,
-            uint256,
-            address
-        )
-    {
-        return (costOfProduct, buyerCount, manager);
-    }
-}

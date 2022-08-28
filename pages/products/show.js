@@ -5,6 +5,9 @@ import { Card, Grid } from "semantic-ui-react";
 import PayForm from "../../components/PayForm";
 
 class ProductShow extends Component {
+  state = {
+    role: "",
+  };
   static async getInitialProps(props) {
     const chain = Chain(props.query.address);
 
@@ -51,8 +54,18 @@ class ProductShow extends Component {
         <h3>Product</h3>
         <Grid>
           <Grid.Column width={10}>{this.renderCards()}</Grid.Column>
+
           <Grid.Column width={6}>
-            <PayForm address={this.props.address} />
+            {/* <PayForm address={this.props.address} /> */}
+            <b>Update Status</b>
+            <div>
+              <input type="radio" value="Processed" name="status" /> Processed <br />
+              <input type="radio" value="Packed" name="status" /> Packed <br />
+              <input type="radio" value="Sell" name="status" /> Ready to sell <br />
+            </div>
+            <button className="authButtons">
+                  Update
+                </button>
           </Grid.Column>
         </Grid>
       </Layout>

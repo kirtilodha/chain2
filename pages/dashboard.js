@@ -49,7 +49,7 @@ function ChainIndex() {
         <h3>All Products</h3>
         <br />
 
-        {role == "buyer" && (
+        {role == "Supplier" && (
           <>
             <Link route="/products/new">
               <a>
