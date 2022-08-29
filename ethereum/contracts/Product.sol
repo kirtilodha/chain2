@@ -1,11 +1,12 @@
 pragma solidity ^0.4.17;
 
-contract Chain {
+contract Product {
 
     struct detail{
 
         address manager;
         uint256 costOfProduct;
+        uint256 costOfProductByDistributor;
         mapping(address => bool) buyers;
         uint256 buyerCount;
         uint256 valueOfQuality;
@@ -40,9 +41,6 @@ contract Chain {
         product.buyerCount++;
     }
 
-    function setFarmer(address _address) public {
-        product.farmerid = _address;
-    }
     function setDistributor(address _address) public {
         product.distributorid = _address;
     }
@@ -56,7 +54,21 @@ contract Chain {
         product.status = status;
         product.time = now;
     }
-    
+    function DistributorBuy() public payable{
+        require(msg.value >= product.costOfProduct, "Not sufficient");
+        require(keccak256(abi.encodePacked((product.status))) == keccak256(abi.encodePacked(("sell"))), "Status incorrect!");
+
+        product.farmerid.transfer(product.costOfProduct); //transfer money to farmer
+        setDistributor(msg.sender);
+        updateStatus("bought");
+    }
+    function DistributorShip(uint256 price) public{
+        product.costOfProductByDistributor= price;
+        updateStatus("shipped");
+    }
+    function RetailerBuy() public payable{
+
+    }
     function getSummary()
         public
         view
