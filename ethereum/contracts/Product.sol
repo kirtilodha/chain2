@@ -7,6 +7,7 @@ contract Product {
         address manager;
         uint256 costOfProduct;
         uint256 costOfProductByDistributor;
+        uint256 costOfProductByRetailer;
         mapping(address => bool) buyers;
         uint256 buyerCount;
         uint256 valueOfQuality;
@@ -30,15 +31,6 @@ contract Product {
         product.time = block.timestamp;
         product.farmerid = creator;
         product.status = "Harvested";
-    }
-
-    function buy(string memory quality) public payable {
-        if(keccak256(abi.encodePacked((quality))) == keccak256(abi.encodePacked(("high")))) product.valueOfQuality=product.costOfProduct;
-        else if(keccak256(abi.encodePacked((quality))) == keccak256(abi.encodePacked(("medium")))) product.valueOfQuality= product.costOfProduct* 75/100;
-        else product.valueOfQuality = product.costOfProduct * 50/100;
-        require(msg.value >= product.valueOfQuality);
-        product.buyers[msg.sender] = true;
-        product.buyerCount++;
     }
 
     function setDistributor(address _address) public {
@@ -66,8 +58,28 @@ contract Product {
         product.costOfProductByDistributor= price;
         updateStatus("shipped");
     }
-    function RetailerBuy() public payable{
+    function RetailerReceive(uint256 price) public payable{
+        require(msg.value >= product.costOfProductByDistributor, "Not sufficient");
+        require(keccak256(abi.encodePacked((product.status))) == keccak256(abi.encodePacked(("shipped"))), "Status incorrect!");
 
+        product.costOfProductByRetailer = price;
+        product.distributorid.transfer(product.costOfProductByDistributor);
+        setRetailer(msg.sender);
+        updateStatus("received");
+
+    }
+    function buy(string memory quality) public payable {
+        if(keccak256(abi.encodePacked((quality))) == keccak256(abi.encodePacked(("high")))) product.valueOfQuality=product.costOfProductByRetailer;
+        else if(keccak256(abi.encodePacked((quality))) == keccak256(abi.encodePacked(("medium")))) product.valueOfQuality= product.costOfProductByRetailer* 75/100;
+        else product.valueOfQuality = product.costOfProductByRetailer * 50/100;
+
+        require(keccak256(abi.encodePacked((product.status))) == keccak256(abi.encodePacked(("received"))), "Status incorrect!");
+        require(msg.value >= product.valueOfQuality);
+        
+        product.retailerid.transfer(product.valueOfQuality);
+        setCustomer(msg.sender);
+        product.buyers[msg.sender] = true;
+        product.buyerCount++;
     }
     function getSummary()
         public
