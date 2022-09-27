@@ -22,5 +22,10 @@
     "solc": "^0.4.17",
     "truffle-hdwallet-provider": "^1.0.17",
     "web3": "^1.2.9"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.11",
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8"
   }
 }

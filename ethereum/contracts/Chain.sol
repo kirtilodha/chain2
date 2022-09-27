@@ -1,6 +1,6 @@
 pragma solidity ^0.4.17;
 
-import './Product.sol';
+// import './Product.sol';
 
 contract MainChain {
     uint256 public userId = 0;
@@ -47,11 +47,11 @@ contract MainChain {
 
     address[] public deployedChain;
 
-    function createChain(uint256 price) public {
-        address newChain = address(new Chain(price, msg.sender));
-        deployedChain.push(newChain);
-        individualChains[msg.sender].push(newChain);
-    }
+    // function createChain(uint256 price) public {
+    //     address newChain = address(new Product(price, msg.sender));
+    //     deployedChain.push(newChain);
+    //     individualChains[msg.sender].push(newChain);
+    // }
 
     function getDeployedChains() public view returns (address[] memory) {
         return deployedChain;

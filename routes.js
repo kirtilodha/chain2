@@ -2,6 +2,7 @@ const routes = require('next-routes')();
 
 //for vairable routing
 routes
+.add('/','index')
 .add('/products/new', '/products/new') //what url, which page
 .add('/products/myProducts', '/products/myProducts') 
 .add('/products/:address', '/products/show')

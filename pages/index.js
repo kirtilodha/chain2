@@ -43,77 +43,86 @@ function Auth() {
   };
   console.log(role);
   return (
-    <div className="authDiv">
-      <div className="authCardHolder">
-        <div className="authCard">
-          <center>
-            <font size="3" className="agoraTitle">
-              <b>Registration Page</b>
-            </font>
-          </center>
+    // <div className="authDiv">
+    //   <div className="authCardHolder">
+    //     <div className="authCard">
+    //       <center>
+    //         <font size="3" className="agoraTitle">
+    //           <b>Registration Page</b>
+    //         </font>
+    //       </center>
 
-          <>
-            <form onSubmit={registerUser} style={{ margin: "10px" }}>
-              <label className="form-label">Register as</label>
-              {/* <input 
-                className="form-control" 
-                placeholder="Are you a buyer or seller?"
-                onChange={handleRoleChange}
-                value={role}
-                type="text"
-              /> */}
-              <div>
-                <input
-                  type="radio"
-                  value="Supplier"
-                  name="gender"
-                  onChange={handleRoleChange}
-                />{" "}
-                Supplier
-                <input
-                  type="radio"
-                  value="Distributor"
-                  name="gender"
-                  onChange={handleRoleChange}
-                />{" "}
-                Distributor
-                <input
-                  type="radio"
-                  value="Retailer"
-                  name="gender"
-                  onChange={handleRoleChange}
-                />{" "}
-                Retailer
-                <input
-                  type="radio"
-                  value="Customer"
-                  name="gender"
-                  onChange={handleRoleChange}
-                />{" "}
-                Customer
-              </div>
-              <br />
-              <br />
-              {/* <label className="form-label">Wallet address</label>
-              <input
-                className="form-control"
-                type="text"
-                value={account}
-              /> */}
-              {/* <br />
-              <button onClick={userRole} className="authButtons">Give role</button> */}
+    //       <>
+    //         <form onSubmit={registerUser} style={{ margin: "10px" }}>
+    //           <label className="form-label">Register as</label>
+    //           {/* <input 
+    //             className="form-control" 
+    //             placeholder="Are you a buyer or seller?"
+    //             onChange={handleRoleChange}
+    //             value={role}
+    //             type="text"
+    //           /> */}
+    //           <div>
+    //             <input
+    //               type="radio"
+    //               value="Supplier"
+    //               name="gender"
+    //               onChange={handleRoleChange}
+    //             />{" "}
+    //             Supplier
+    //             <input
+    //               type="radio"
+    //               value="Distributor"
+    //               name="gender"
+    //               onChange={handleRoleChange}
+    //             />{" "}
+    //             Distributor
+    //             <input
+    //               type="radio"
+    //               value="Retailer"
+    //               name="gender"
+    //               onChange={handleRoleChange}
+    //             />{" "}
+    //             Retailer
+    //             <input
+    //               type="radio"
+    //               value="Customer"
+    //               name="gender"
+    //               onChange={handleRoleChange}
+    //             />{" "}
+    //             Customer
+    //           </div>
+    //           <br />
+    //           <br />
+    //           {/* <label className="form-label">Wallet address</label>
+    //           <input
+    //             className="form-control"
+    //             type="text"
+    //             value={account}
+    //           /> */}
+    //           {/* <br />
+    //           <button onClick={userRole} className="authButtons">Give role</button> */}
 
-              {isRegistered() && (
-                <button onClick={registerUser} className="authButtons">
-                  SIGN UP
-                </button>
-              )}
-            </form>
+    //           {isRegistered() && (
+    //             <button onClick={registerUser} className="authButtons">
+    //               SIGN UP
+    //             </button>
+    //           )}
+    //         </form>
 
-            <br />
-          </>
-        </div>
-      </div>
+    //         <br />
+    //       </>
+    //     </div>
+    //   </div>
+    //   {/* rgba(164, 212, 235, 0.8) */}
+    // </div>
+    <div className="bg-sky-200 w-screen h-screen">
+        <div className="bg-white w-5/6 h-4/5 mx-28 rounded-3xl shadow-lg columns-2">
+          <div className="rounded-3xl h-full">jj</div>
+          <div className="h-full">
+          <iframe src="https://giphy.com/embed/MCiEBkSmaBRIPVZGWl" className="h-full w-full" frameBorder="0" allowFullScreen></iframe>
+          </div>
+          </div>
     </div>
   );
 }
