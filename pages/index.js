@@ -126,11 +126,11 @@ function Auth() {
             <h6 class="flex justify-center font-medium leading-tight text-base mt-0 mb-2 text-black">
               Please enter your details
             </h6>
-
+            <br />
             <form onSubmit={registerUser} style={{ margin: "10px" }}>
               {/* <label className="form-label">Register as</label> */}
               <h4 class="font-medium leading-tight text-2xl mt-0 mb-2 text-black">
-                Register as
+                Register as:
               </h4>
 
               {/* <input 
@@ -171,7 +171,7 @@ function Auth() {
                 Customer <br />
               </div> */}
               <br />
-              <br />
+              {/* <br /> */}
 
               <div class="flex items-center pl-4 rounded border border-gray-200 dark:border-gray-700">
                 <input
