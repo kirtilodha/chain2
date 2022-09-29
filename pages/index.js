@@ -1,47 +1,78 @@
-import { useState } from "react";
+import { useState ,useEffect} from "react";
 import web3 from "../ethereum/web3";
 import { Router } from "../routes";
+import { ethers } from "ethers";
 
 import main from "../ethereum/main";
 
+
+import MainChain from "../build/MainChain.json"
+
 function Auth() {
   const [account, setAccount] = useState("");
-  //   const { MainContract, account, initialized, isRegistered } = useCallContext();
-
+  const [registered,setRegistration] = useState(0);
   const [role, setRole] = useState("");
 
   const handleRoleChange = (e) => {
     setRole(e.target.value);
   };
 
+  const contractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+
   const registerUser = async (e) => {
     event.preventDefault();
 
     try {
-      const accounts = await web3.eth.getAccounts();
-      await main.methods.createUser(role).send({
-        from: accounts[0],
-      });
-      setAccount(accounts[0]);
-      console.log("success");
-      Router.pushRoute("/");
+      const {ethereum} = window;
+
+      if(ethereum){
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(
+          contractAddress,
+          MainChain.abi,
+          signer
+        );
+        const transaction = await contract.createUser(role);
+        await transaction.wait();
+
+        console.log("successful");
+        // Router.pushRoute("/");
+
+      }
+      
     } catch (err) {
       console.log(err);
     }
   };
-  const isRegistered = async (e) => {
+  
+  const isRegistered = async () => {
     try {
-      const accounts = await web3.eth.getAccounts();
-      const status = await main.methods.isRegistered(accounts[0]).call();
-      const role = await main.methods.checkUser(accounts[0]).call();
-      Router.pushRoute("/dashboard");
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+
+        const contract = new ethers.Contract(
+          contractAddress,
+          MainChain.abi,
+          signer
+        );
+        const status = await contract.isRegistered("0x70997970C51812dc3A010C7d01b50e0d17dc79C8"); 
+        setRegistration(parseInt(status));
+        // console.log(parseInt(status))
+        if(parseInt(status)==1) Router.pushRoute("/dashboard")
+      }
     } catch (err) {
       console.log(err);
     }
-
-    return status[0];
   };
   console.log(role);
+
+useEffect(()=>{
+  isRegistered();
+},[])
   return (
     // <div className="authDiv">
     //   <div className="authCardHolder">
@@ -127,6 +158,7 @@ function Auth() {
               Please enter your details
             </h6>
             <br />
+
             <form onSubmit={registerUser} style={{ margin: "10px" }}>
               {/* <label className="form-label">Register as</label> */}
               <h4 class="font-medium leading-tight text-2xl mt-0 mb-2 text-black">
@@ -177,8 +209,9 @@ function Auth() {
                 <input
                   id="bordered-radio-1"
                   type="radio"
-                  value=""
+                  value="Supplier"
                   name="bordered-radio"
+                  onChange={handleRoleChange}
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
@@ -188,13 +221,15 @@ function Auth() {
                   Supplier
                 </label>
               </div>
+
               <div class="flex items-center pl-4 rounded border border-gray-200 dark:border-gray-700">
                 <input
                   checked=""
                   id="bordered-radio-2"
                   type="radio"
-                  value=""
+                  value="Distributor"
                   name="bordered-radio"
+                  onChange={handleRoleChange}
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
@@ -209,8 +244,9 @@ function Auth() {
                   checked=""
                   id="bordered-radio-2"
                   type="radio"
-                  value=""
+                  value="Retailer"
                   name="bordered-radio"
+                  onChange={handleRoleChange}
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
@@ -225,8 +261,9 @@ function Auth() {
                   checked=""
                   id="bordered-radio-2"
                   type="radio"
-                  value=""
+                  value="Customer"
                   name="bordered-radio"
+                  onChange={handleRoleChange}
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
@@ -246,8 +283,10 @@ function Auth() {
               {/* <br />
               <button onClick={userRole} className="authButtons">Give role</button> */}
               <br />
-              {isRegistered() && (
+
+              {registered==0 && (
                 <button
+                onClick={registerUser}
                   type="button"
                   class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                 >

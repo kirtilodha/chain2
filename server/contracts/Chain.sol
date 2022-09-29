@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
 
-// import './Product.sol';
+import "./Product.sol";
 
 contract MainChain {
     uint256 public userId = 0;
@@ -11,54 +11,66 @@ contract MainChain {
     }
     mapping(uint256 => UserAuth) public Users;
     mapping(address => address[]) public individualChains;
+    mapping(address => uint) public registered;
 
     // event userCreated(UserAuth user);
-    function isRegistered(address _publicAddress)
-        public
-        view
-        returns (uint256[2] memory)
-    {
-        uint256[2] memory result = [uint256(0), uint256(0)];
-        for (uint256 i = 0; i < userId; i++) {
-            if (_publicAddress == Users[i].publicAddress) {
-                result[0] = 1;
-                result[1] = i;
-                return result;
-            }
-        }
-        return result;
+    function isRegistered(address _publicAddress) public view returns (uint) {
+        return registered[_publicAddress];
+
+        // uint256[2] memory result = [uint256(0), uint256(0)];
+        // for (uint256 i = 0; i < userId; i++) {
+        //     if (_publicAddress == Users[i].publicAddress) {
+        //         result[0] = 1;
+        //         result[1] = i;
+        //         return result;
+        //     }
+        // }
+        // return result;
     }
 
-    function checkUser(address _publicAddress) public view returns (string memory) {
-        require((isRegistered(_publicAddress))[0] == 1, "User not registered!");
+    function checkUser(address _publicAddress)
+        public
+        view
+        returns (string memory)
+    {
+        require((isRegistered(_publicAddress)) == 1, "User not registered!");
         for (uint256 i = 0; i < userId; i++) {
             if (_publicAddress == Users[i].publicAddress) {
                 return Users[i].role;
             }
         }
+        return "";
     }
 
     function createUser(string memory role) public {
-        require((isRegistered(msg.sender))[0] == 0, "User already registered!");
+        require(
+            (isRegistered(msg.sender)) == 0,
+            "User already registered!"
+        );
         // User user = new User(userId, name, msg.sender);
         Users[userId] = UserAuth(msg.sender, role);
+        registered[msg.sender] = 1;
         // emit userCreated(Users[userId]);
         userId++;
     }
 
     address[] public deployedChain;
 
-    // function createChain(uint256 price) public {
-    //     address newChain = address(new Product(price, msg.sender));
-    //     deployedChain.push(newChain);
-    //     individualChains[msg.sender].push(newChain);
-    // }
+    function createChain(uint256 price) public {
+        address newChain = address(new Product(price, msg.sender));
+        deployedChain.push(newChain);
+        individualChains[msg.sender].push(newChain);
+    }
 
     function getDeployedChains() public view returns (address[] memory) {
         return deployedChain;
     }
-    function getOwnChains(address _publicAddress) public view returns (address[] memory) {
+
+    function getOwnChains(address _publicAddress)
+        public
+        view
+        returns (address[] memory)
+    {
         return individualChains[_publicAddress];
     }
 }
-
