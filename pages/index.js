@@ -3,7 +3,7 @@ import web3 from "../ethereum/web3";
 import { Router } from "../routes";
 import { ethers } from "ethers";
 
-import main from "../ethereum/main";
+// import main from "../ethereum/main";
 
 
 import MainChain from "../build/MainChain.json"
@@ -17,7 +17,7 @@ function Auth() {
     setRole(e.target.value);
   };
 
-  const contractAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
   const registerUser = async (e) => {
     event.preventDefault();

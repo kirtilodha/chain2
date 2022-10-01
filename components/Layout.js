@@ -5,7 +5,7 @@ import {Container} from 'semantic-ui-react';
 
 export default props =>{
     return(
-        <Container>
+        <Container >
             <Head>
             <link
                 async
@@ -16,5 +16,6 @@ export default props =>{
             <Header />
             {props.children}
         </Container>
+        // <></>
     )
 }
