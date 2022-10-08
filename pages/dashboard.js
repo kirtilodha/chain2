@@ -85,8 +85,8 @@ function ChainIndex() {
   return (
     <div className="bg-slate-300 h-screen w-screen px-10">
       {/* <Layout> */} <Header />
-      <div>
-        <h3 class="font-medium leading-tight text-3xl mt-0 mb-2 text-black">
+      <div className="mb-6">
+        <h3 class="font-medium leading-tight text-3xl mt-0 mb-2 text-black float-left">
           All Products
         </h3>
         <br />

@@ -20,7 +20,7 @@ export default()=>{
         //         </Link>
         //     </Menu.Menu>
         // </Menu>
-        <div className="w-screen h-10  mb-20 px-16 pt-2 ">
+        <div className="w-full h-20 mb-20 px-16 pt-2 shadow-lg">
         <div className="decoration-double font-serif text-xl inline p-5 float-left">BuyIt</div>
         <div className="decoration-double font-serif text-xl inline p-5 float-right">Products</div>
         <div className="decoration-double font-serif text-xl inline p-5 float-right">+</div>
