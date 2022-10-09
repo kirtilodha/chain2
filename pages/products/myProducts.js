@@ -12,7 +12,12 @@ import { ethers } from "ethers";
 import MainChain from "../../build/MainChain.json";
 
 function MyProducts() {
-  const [myChains,setMyChains]= useState([]);
+  const [myChains, setMyChains] = useState([]);
+
+  if (typeof window !== "undefined") {
+    const hostname = window.location.href;
+    console.log(hostname);
+  }
 
   const items = myChains.map((address) => {
     return (
@@ -28,7 +33,7 @@ function MyProducts() {
   });
 
   const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
-console.log(myChains)
+  console.log(myChains);
   const getChains = async () => {
     try {
       const { ethereum } = window;
@@ -42,7 +47,9 @@ console.log(myChains)
           MainChain.abi,
           signer
         );
-        const chains = await contract.getOwnChains("0x70997970C51812dc3A010C7d01b50e0d17dc79C8");
+        const chains = await contract.getOwnChains(
+          "0x70997970C51812dc3A010C7d01b50e0d17dc79C8"
+        );
         console.log(chains);
         setMyChains(chains);
         // console.log(parseInt(status))
@@ -60,15 +67,12 @@ console.log(myChains)
       {/* <Layout> */} <Header />
       <div className="mb-6">
         <h3 class="font-medium leading-tight text-3xl mt-0 mb-2 text-black float-left">
-        My Products
+          My Products
         </h3>
         <br />
-
-        
       </div>
       {items}
     </div>
-    
   );
 }
 
