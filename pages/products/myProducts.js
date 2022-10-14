@@ -32,7 +32,7 @@ function MyProducts() {
     );
   });
 
-  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+  const contractAddress = "0x7547bfB4cdc8767F5B00EfDAe4B338db3d5C5137";
   console.log(myChains);
   const getChains = async () => {
     try {

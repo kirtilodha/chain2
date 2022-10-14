@@ -16,7 +16,7 @@ class ChainNew extends Component {
     price: "",
     errorMessage: "",
     loading: false,
-    contractAddress: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    contractAddress: "0x7547bfB4cdc8767F5B00EfDAe4B338db3d5C5137",
   };
 
   onSubmit = async (event) => {

@@ -17,7 +17,7 @@ function Auth() {
     setRole(e.target.value);
   };
 
-  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+  const contractAddress = "0x3874AAc05E366aDb26494032E2902b202E5f44eb";
 
   const registerUser = async (e) => {
     event.preventDefault();
@@ -59,7 +59,7 @@ function Auth() {
           MainChain.abi,
           signer
         );
-        const status = await contract.isRegistered("0x70997970C51812dc3A010C7d01b50e0d17dc79C8"); 
+        const status = await contract.isRegistered("0xc87eE570715492F7C2c151a20813A682a201D02F"); 
         setRegistration(parseInt(status));
         // console.log(parseInt(status))
         if(parseInt(status)==1) Router.pushRoute("/dashboard")
